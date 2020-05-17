@@ -30,14 +30,16 @@ def info_of_the_year(dicti, country, year):
     :return info:
     '''
     position = year - 1960
+    # print(country, position)
     info = dicti[country][position]
     return info
 
-
-if __name__ == "__main__":
+def count_users(country, year):
     percentage = make_dict(opener('percentage.csv'))
     population = make_dict(opener('population.csv'))
-    per = info_of_the_year(percentage, 'Ukraine', 2015)#percentage of internet users in Ukraine in 2015
-    pop = info_of_the_year(population, 'Ukraine', 2015)#population of Ukraine in 2015
-    users = int(per) * int(pop) / 100
-    print(users)
+    per = info_of_the_year(percentage, country, year)#percentage of internet users in the country in year
+    pop = info_of_the_year(population, country, year)#population of the country in year
+    users = float(per) * float(pop) / 100
+    return users
+
+# print(count_users('South Korea', 2001))
