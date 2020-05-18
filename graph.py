@@ -11,9 +11,8 @@ def build_graph(users, years, country):
     plt.ylabel('users')
 
     plt.title('Internet users in ' + country)
-
+    # plt.figure(figsize=(2,1))
     plt.savefig('graph.jpg')
-    return os.system('graph.jpg')
 
 
 # print(build_graph([23566, 23555, 24000, 23823], [2000, 2001, 2002, 2003], 'Ukraine'))

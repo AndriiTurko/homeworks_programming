@@ -102,8 +102,8 @@ def check_input():
 
 
 def main():
-    (years, countries) = check_input()
-    # years, countries = [2000], ['Ukraine']
+    # (years, countries) = check_input()
+    years, countries = [2000], ['Ukraine']
     result = Countries(years, countries)
     result.fill_the_array()
 
