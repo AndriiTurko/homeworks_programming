@@ -1,7 +1,9 @@
 import folium
 from folium.plugins import MarkerCluster
 from geopy.geocoders import Nominatim
-
+import json
+from graph import build_graph
+from PIL import Image
 
 
 def get_coordinates(location):
@@ -18,46 +20,52 @@ def get_coordinates(location):
         return None
 
 
-def color_change(elev):
-    if(elev < 3):
-        return('green')
-    elif(3 <= elev < 7):
-        return('orange')
-    else:
-        return('red')
-
-
 def build_map(array):
     '''
-    Builds map with countries in different colours
-    depending on the amount of internet users.
+    Builds map with countries in colours.
     '''
     print('')
+    with open('locations.json', 'r', encoding='utf-8') as f:
+        dicti = json.load(f)
     
-
-    locations = {}
-    for q in array:
-        location = q._name
-        q.add(get_coordinates(location))
-  
+    user_map = folium.Map(tiles = "OpenStreetMap", max_zoom=7, )
+    country_names = []
     dicti_coor = {}
-    for i in locations:
-        coor = get_coordinates(i)
-        if coor not in dicti_coor and coor != None:
-            dicti_coor[coor] = locations[i]
-        elif coor != None:
-            dicti_coor[coor] = dicti_coor[coor] + ', ' + locations[i]
-
-    user_map = folium.Map(tiles = "CartoDB dark_matter")
-    
+    for q in array:
+        years = []
+        users = []
+        cur = q._qhead
+        while cur is not None:
+            years.append(cur.year)
+            users.append(cur.item)
+            cur = cur.next
+        build_graph(users, years, q._name)
+        graph = Image.open("graph.jpg")
+        dicti_coor[tuple(dicti[q._name])] = 'C:\Users\User\Desktop\Домашні завдання ОП\hw\graph.jpg'
+        country_names.append(q._name)
     marker_cluster = MarkerCluster().add_to(user_map)
+
+    fg_psn = folium.FeatureGroup(name="Users")
+    fg_psn.add_child(
+        folium.GeoJson(
+            data=open('world.json', 'r', encoding='utf-8-sig').read(),
+            style_function=lambda x:{
+                'fillColor':'green'
+                if x['properties']['NAME'] in country_names
+                else 'white',
+                'color': 'black',
+                'weight': 2.5
+                }
+            )
+        ).add_to(user_map)
+
+
     for loc in dicti_coor:
         try:
             location = loc
             folium.CircleMarker(
                 location=[float(location[0]),
                 float(location[1])],
-                color=color_change(len(dicti_coor[loc].split(', '))),
                 popup=dicti_coor[loc],
                 fill_color='black', fill_opacity = 0.9,
                 radius = 10,
@@ -65,4 +73,4 @@ def build_map(array):
         except:
             continue
 
-    user_map.save('templates/friends.html')
+    user_map.save('templates/users.html')

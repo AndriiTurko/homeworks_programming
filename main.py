@@ -3,6 +3,7 @@ from json_make_dict import conti_with_count, json_read
 from country_queue import CountryQueue
 from myarray import Array
 from reader import count_users
+from users_map import build_map
 
 
 class Countries:
@@ -48,7 +49,6 @@ def check_input():
         else:
             if last_y == '':
                 last_y = first_y
-            print(last_y)
             first_y = int(first_y)
             last_y = int(last_y)
             if last_y < first_y:
@@ -63,16 +63,16 @@ def check_input():
     while new_flag:
         continents = conti_with_count()
         print('Choose how many countries you want to see info about.')
-        print('All(all), one continent(conti), one country(count).')
+        print('All(1), one continent(2), one country(3).')
         amount = input().lower()
         countries = []
-        if amount != 'all' and amount != 'conti' and amount != 'count':
+        if amount != '1' and amount != '2' and amount != '3':
             print('\nInvalid input...\n')
-        elif amount == 'all':
+        elif amount == '1':
             for conti in continents:
                 countries += continents[conti]
             new_flag = False
-        elif amount == 'conti':
+        elif amount == '2':
             temp_flag = True
             while temp_flag:
                 print('Сhoose continent:\
@@ -86,7 +86,7 @@ def check_input():
                     temp_flag = False
             countries += continents[conti]
             new_flag = False
-        elif amount == 'count':
+        elif amount == '3':
             temp_flag = True
             while temp_flag:
                 print('Choose country(name in English):')
@@ -103,10 +103,11 @@ def check_input():
 
 def main():
     (years, countries) = check_input()
+    # years, countries = [2000], ['Ukraine']
     result = Countries(years, countries)
     result.fill_the_array()
-    # while cur is not None:
-    #     print(cur.item)
-    #     cur = cur.next
-    print(result)
+
+    build_map(result.result)
+
+
 main()

@@ -1,0 +1,16 @@
+import json
+from main import Countries
+from users_map import get_coordinates
+
+
+count = Countries([2000], ['Bangladesh', 'Brunei Darussalam', 'Bahrain', 'Bhutan', 'Turkmenistan', 'Tajikistan', 'Japan', 'Georgia', 'Oman', 'Jordan', 'Hong Kong SAR', 'Iraq', 'Pakistan', 'Philippines', 'Vietnam', 'Saudi Arabia', 'Uzbekistan', 'Myanmar', 'Macao SAR', 'Mongolia', 'Maldives', 'Malaysia', 'Israel', 'Nepal', 'China', 'Syrian Arab Republic', 'Kyrgyz Republic', 'Cambodia', 'South Korea', 'North Korea', 'Kuwait', 'Kazakhstan', 'Singapore', 'Yemen', 'Lebanon', 'Lao PDR', 'Turkey', 'Sri Lanka', 'Thailand', 'United Arab Emirates', 'Afghanistan', 'Iran', 'Armenia', 'India', 'Azerbaijan', 'Indonesia', 'Qatar', 'Belgium', 'Bulgaria', 'Bosnia and Herzegovina', 'Belarus', 'Russian Federation', 'Serbia', 'Romania', 'Greece', 'United Kingdom', 'Gibraltar', 'Croatia', 'Hungary', 'Portugal', 'Poland', 'Estonia', 'Italy', 'Spain', 'Montenegro', 'Moldova', 'Monaco', 'North Macedonia', 'Malta', 'Isle of Man', 'France', 'Finland', 'Faroe Islands', 'Netherlands', 'Norway', 'Kosovo', 'Switzerland', 'Czech Republic', 'Cyprus', 'Slovak Republic', 'Slovenia', 'San Marino', 'Sweden', 'Denmark', 'Germany', 'Liechtenstein', 'Latvia', 'Lithuania', 'Luxembourg', 'Andorra', 'Iceland', 'Albania', 'Austria', 'Ireland', 'Ukraine', 'Burkina Faso', 'Burundi', 'Benin', 'Botswana', 'Rwanda', 'Guinea-Bissau', 'Equatorial Guinea', 'Gabon', 'Guinea', 'Gambia', 'Ghana', 'Tunisia', 'Zambia', 'Egypt', 'South Africa', 'Ethiopia', 'Somalia', 'Zimbabwe', 'Eritrea', 'Madagascar', 'Morocco', 'Mali', 'Mauritius', 'Malawi', 'Mauritania', 'Uganda', 'Tanzania', 'Namibia', 'Niger', 'Nigeria', "Cote d'Ivoire", 'Cameroon', 'Republic of the Congo', 'Central African Republic', 'Democratic Republic of the Congo', 'Cabo Verde', 'Eswatini', 'Kenya', 'South Sudan', 'Comoros', 'Sao Tome and Principe', 'Senegal', 'Sierra Leone', 'Seychelles', 'Sudan', 'Djibouti', 'Algeria', 'Liberia', 'Lesotho', 'Togo', 'Chad', 'Libya', 'Angola', 'Mozambique', 'Barbados', 'Bermuda', 'Jamaica', 'Bahamas', 'Belize', 'Guatemala', 'Grenada', 'El Salvador', 'Greenland', 'Haiti', 'Honduras', 'Puerto Rico', 'Panama', 'Saint Martin', 'Mexico', 'Nicaragua', 'Canada', 'Costa Rica', 'Curacao', 'Cuba', 'Sint Maarten', 'Saint Kitts and Nevis', 'Cayman Islands', 'Dominican Republic', 'Dominica', 'British Virgin Islands', 'United States', 'Saint Lucia', 'Trinidad and Tobago', 'Turks and Caicos Islands', 'Saint Vincent and the Grenadines', 'Antigua and Barbuda', 'American Virgin Islands', 'Aruba', 'Bolivia', 'Brazil', 'Guyana', 'Venezuela', 'Paraguay', 'Peru', 'Ecuador', 'Colombia', 'Chile', 'Suriname', 'Uruguay', 'Argentina', 'Samoa', 'Timor-Leste', 'Guam', 'Palau', 'French Polynesia', 'Papua New Guinea', 'Solomon Islands', 'Marshall Islands', 'Northern Mariana Islands', 'Fiji', 'Micronesia', 'Vanuatu', 'New Caledonia', 'New Zealand', 'Nauru', 'Kiribati', 'Tuvalu', 'Tonga', 'American Samoa', 'Australia'])
+count.fill_the_array()
+array = count.result
+
+dicti = {}
+for q in array:
+    dicti[q._name] = get_coordinates(q._name)
+
+
+with open('locations.json', 'w', encoding='utf-8') as f:
+    json.dump(dicti, f, indent=4, ensure_ascii=False)

@@ -9,14 +9,6 @@ def json_read(path):
     return text
 
 
-def write_in_json(dictionary):
-    '''
-    Writes the dictionary in json file.
-    '''
-    with open('kved_results.json', 'w', encoding='utf-8') as f:
-        json.dump(dictionary, f, indent=4, ensure_ascii=False)
-
-
 def conti_with_count():
     names = json_read('names.json')
     continents = json_read('continent.json')
