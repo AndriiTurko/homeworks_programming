@@ -22,14 +22,7 @@ def build_graph(users, years, country):
  
 def resize_image(input_image_path, output_image_path, size):
     original_image = Image.open(input_image_path)
-    width, height = original_image.size
-    print('The original image size is {wide} wide x {height} '
-          'high'.format(wide=width, height=height))
- 
     resized_image = original_image.resize(size)
-    width, height = resized_image.size
-    print('The resized image size is {wide} wide x {height} '
-          'high'.format(wide=width, height=height))
     resized_image.save(output_image_path)
 
 # build_graph([60917000, 7000000, 1517476, 1668422], [2000, 2001, 2002, 2003], 'Ukraine')
