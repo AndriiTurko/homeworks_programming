@@ -40,7 +40,7 @@ class Countries:
 def check_input():
     flag = True
     while flag:
-        print('Choose years(between 1960 and 2019) you want get info about.\
+        print('Choose years(between 1980 and 2017) you want get info about.\
             \nInput first and last years of the interval.')
         first_y, last_y = input('First year: '), input('Last year: ')
         if not (first_y.isdigit() and first_y != '' and
@@ -53,7 +53,7 @@ def check_input():
             last_y = int(last_y)
             if last_y < first_y:
                 print('First year should be less than last year!\n')
-            elif first_y < 1960 or last_y > 2019:
+            elif first_y < 1980 or last_y > 2017:
                 print('Please choose years from the given interval.\n')
             else:
                 years = [year for year in range(first_y, last_y+1)]
@@ -101,13 +101,26 @@ def check_input():
     return (years, countries)
 
 
+def check_web_input(country):
+    continents = conti_with_count()
+    countries = []
+    if country.lower() == 'all':
+        for conti in continents:
+            countries += continents[conti]
+    elif country.upper() in continents:
+        countries += continents[country.upper()]
+    elif country in json_read('names.json').values():
+        countries.append(country)
+    else:
+        return False
+    return countries
+
+
+
+
 def main():
     # (years, countries) = check_input()
-    years, countries = [2000], ['Ukraine']
+    years, countries = [i for i in range(2000, 2018)], ['Ukraine']
     result = Countries(years, countries)
     result.fill_the_array()
-
     build_map(result.result)
-
-
-main()

@@ -29,7 +29,7 @@ def build_map(array):
     with open('locations.json', 'r', encoding='utf-8') as f:
         dicti = json.load(f)
     
-    user_map = folium.Map(zoom_start = 2, tiles = "OpenStreetMap", max_zoom=7)
+    user_map = folium.Map(max_zoom=7, min_zoom=2)
     country_names = []
     dicti_coor = {}
     for q in array:
@@ -48,7 +48,7 @@ def build_map(array):
         folium.GeoJson(
             data=open('world.json', 'r', encoding='utf-8-sig').read(),
             style_function=lambda x:{
-                'fillColor':'green'
+                'fillColor':'red'
                 if x['properties']['NAME'] in country_names
                 else 'white',
                 'color': 'black',
@@ -62,9 +62,9 @@ def build_map(array):
         location = loc
         (users, years, country) = dicti_coor[loc]
         build_graph(users, years, country)
-        encoded = base64.b64encode(open('graph.JPG', 'rb').read())
+        encoded = base64.b64encode(open('graphs/graph'+ country +'.JPG', 'rb').read())
         html = '<img src="data:image/jpeg;base64,{}">'.format
-        iframe = folium.IFrame(html(encoded.decode('UTF-8')), width=532, height=320)
+        iframe = folium.IFrame(html(encoded.decode('UTF-8')), width=420, height=308)
         popup = folium.Popup(iframe, max_width=2000)
         folium.Marker(location=[float(location[0]),
                       float(location[1])],

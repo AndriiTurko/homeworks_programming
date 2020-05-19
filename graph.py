@@ -1,18 +1,35 @@
 import matplotlib.pyplot as plt
-import os
+from PIL import Image
 
 def build_graph(users, years, country):
     '''
     Builds a dependency chart of users and years in country
     '''
+    plt.clf()
+    users = [user/1000 for user in users]
     plt.plot(years, users, color='green', marker='o',
              linestyle='dashed', linewidth=2, markersize=10)
-    plt.xlabel('years')
-    plt.ylabel('users')
+    plt.xlabel('YEARS')
+    plt.ylabel('USERS(thousands)')
 
     plt.title('Internet users in ' + country)
-    # plt.figure(figsize=(2,1))
-    plt.savefig('graph.jpg')
+    if len(years) <= 5:
+        plt.xticks(years)
+    plt.savefig('graphs/graph'+ country +'.jpg')
+    resize_image('graphs/graph'+ country +'.jpg', 'graphs/graph'+ country +'.jpg', (400, 288))
 
 
-# print(build_graph([23566, 23555, 24000, 23823], [2000, 2001, 2002, 2003], 'Ukraine'))
+ 
+def resize_image(input_image_path, output_image_path, size):
+    original_image = Image.open(input_image_path)
+    width, height = original_image.size
+    print('The original image size is {wide} wide x {height} '
+          'high'.format(wide=width, height=height))
+ 
+    resized_image = original_image.resize(size)
+    width, height = resized_image.size
+    print('The resized image size is {wide} wide x {height} '
+          'high'.format(wide=width, height=height))
+    resized_image.save(output_image_path)
+
+# build_graph([60917000, 7000000, 1517476, 1668422], [2000, 2001, 2002, 2003], 'Ukraine')
